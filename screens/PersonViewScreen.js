@@ -8,6 +8,8 @@ import { fetchPersonById } from '../utils/api';
 
 export default function PersonViewScreen(props) {
 
+  theme = useTheme();
+
   const {id} = props.route.params;
 
   const [person, setPerson] = useState(null);
@@ -17,7 +19,7 @@ export default function PersonViewScreen(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchPersonById(id);
+        const data = await fetchPersonById(id, setOffline);
         setPerson(data);
       } catch (err) {
         console.error(err);
@@ -37,21 +39,83 @@ export default function PersonViewScreen(props) {
 
   // #endregion
 
-  return (
-    <Surface style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text  variant='displaySmall'>Person View Screen</Text>
+  if (!person) {
+    return (
+      <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+        <Text>Loading person data...</Text>
+      </View>
+    )
+  }
 
-      <Text>{person?.name}</Text>
-      <Text>{person?.phone}</Text>
-      <Text>{person?.street}</Text>
-      <Text>{person?.city}</Text>
-      <Text>{person?.state}</Text>
-      <Text>{person?.zip}</Text>
-      <Text>{person?.country}</Text>
-      <Text>{person?.departmentId}</Text>
-      <Button mode="contained" icon="update" onPress={() => showPeopleView()}>
-        Back
-      </Button>
+  return (
+    <Surface style={{flex:1, padding: 16}}>
+      <Text
+        variant="headlineLarge"
+        style={{
+          marginHorizontal: 10,
+          marginBottom: 24,
+          fontWeight: "bold",
+          color: theme.colors.primary,
+        }}
+      >
+        {person?.name}
+      </Text>
+
+      <ScrollView style={{ flex: 1, marginTop: 24 }}>
+        {[
+          { label: "Phone:", value: person.phone },
+          { label: "Street:", value: person.street },
+          { label: "City:", value: person.city },
+          { label: "State:", value: person.state },
+          { label: "Zip:", value: person.zip },
+          { label: "Country:", value: person.country },
+          { label: "Department:", value: person.Department?.name },
+        ].map(({ label, value }, index) => (
+          <View
+            key={index}
+            style={{ marginBottom: 20, paddingHorizontal: 12 }}
+          >
+            <Text
+              variant="bodyMedium"
+              style={{
+                fontWeight: "bold",
+                marginBottom: 6,
+                color: "#5D5D5D",
+                fontSize: 16,
+              }}
+            >
+              {label}
+            </Text>
+            <Text
+              variant="bodyMedium"
+              style={{
+                color: "#2C3E50",
+                fontSize: 14,
+                lineHeight: 22,
+                paddingBottom: 10,
+                borderBottomWidth: 1,
+                borderBottomColor: "#BDC3C7",
+              }}
+            >
+              {value}
+            </Text>
+          </View>
+        ))}
+      </ScrollView>
+
+      <View style={{ padding: 10 }}>
+        <Button
+          mode="contained"
+          icon="keyboard-return"
+          onPress={showPeopleView}
+          style={{
+            width: "100%",
+          }}
+        >
+          Go Back
+        </Button>
+      </View>
+      
     </Surface>
   )
 }

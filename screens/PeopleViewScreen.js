@@ -8,6 +8,8 @@ import { deletePerson, fetchPeople } from '../utils/api';
 
 export default function PeopleViewScreen(props) {
 
+  theme = useTheme();
+
   const isFocused = useIsFocused();
 
   const [people, setPeople] = useState([]);
@@ -19,7 +21,7 @@ export default function PeopleViewScreen(props) {
 
   const fetchData = async () => {
     try {
-      const data = await fetchPeople();
+      const data = await fetchPeople(setOffline);
       setPeople(data);
     } catch (err) {
       console.error(err);
@@ -52,19 +54,15 @@ export default function PeopleViewScreen(props) {
     }
   }
 
-  async function handleDeleteTest() {
-    const lastPerson = people[people.length - 1].id;
-    try {
-      const success = await deletePerson(lastPerson);
-      if (success) {
-        fetchData();
-      } else {
-        setError("Failed to delete. Please try again.");
-      }
-    } catch (err) {
-      console.error("Error deleting:", err);
-      setError("Failed to delete. Check your connection.");
-    }
+  function showDialog(id, name) {
+      setSelectedPersonId(id);
+      setSelectedPersonName(name);
+      setVisible(true);
+  }
+
+  function hideDialog() {
+    setVisible(false);
+    setSelectedPersonId(null);
   }
 
   // #region Navigation
@@ -84,28 +82,119 @@ export default function PeopleViewScreen(props) {
   // #endregion
 
   return (
-    <Surface style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text  variant='displaySmall'>People View Screen</Text>
 
-      {people.map((person) => (
-        <Text key={person.id}>{person.name}</Text>
-      ))}
+    <Surface style={{flex:1, padding: 16}} mode="flat" elevation={1}>
+      {/* offline mode */}
+      {offline && (
+        <View
+          style={{
+            backgroundColor: theme.colors.error,
+            alignItems: "center",
+            marginBottom: 10,
+            borderRadius: 5,
+          }}
+        >
+          <Text variant="bodyLarge" style={{ color: theme.colors.onError, paddingVertical:12 }}>
+            Offline Mode
+          </Text>
+        </View>
+      )}
 
-      <Button mode="contained" icon="human" onPress={() => showViewPerson(3)}>
-        View Person
-      </Button>
+      <Text
+        variant="headlineLarge"
+        style={{
+          marginHorizontal: 10,
+          marginBottom: 24,
+          fontWeight: "bold",
+          color: theme.colors.primary,
+        }}
+      >
+        Staff Directory
+      </Text>
 
-      <Button mode="contained" icon="pen" onPress={() => showEditPerson(1)}>
-        Edit Person
-      </Button>
+      <ScrollView style={{flex: 1}}>
+        {people.map((person) => (
+          <View
+            key={person.id}
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              marginHorizontal: 10,
+              marginTop: 10,
+              backgroundColor: theme.colors.elevation.level2,
+              alignItems: "center",
+              borderRadius: 5,
+            }}
+          >
+            <View style={{ alignItems: "center", justifyContent: "center", paddingLeft:10 }}>
+              { /* Avatar */}
+              <TouchableOpacity onPress={() => showViewPerson(person.id)}>
+                <Avatar.Icon size={48} icon="folder-open-outline" />
+              </TouchableOpacity>
+            </View>
+            <View style={{ flex: 1, marginLeft: 10, padding: 10 }}>
+              { /* Main Content */}
+              <Text variant="titleMedium">{person.name}</Text>
+              <Text variant="titleMedium">{person.Department.name}</Text>
+              <Text variant="titleMedium">{person.phone}</Text>
+            </View>
+            <View>
+              { /* Action Buttons */}
+              <View>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <View
+                    style={{
+                      flex: 1,
+                      alignItems: "center",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <IconButton icon="pencil" mode="contained" iconColor={theme.colors.onSecondary} size={24} onPress={() => { showEditPerson(person.id) }} disabled={offline}/>
+                  </View>
+                  <View
+                    style={{
+                      flex: 1,
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                    }}
+                  >
+                    <IconButton icon="delete"  mode="contained" iconColor={theme.colors.onSecondary} size={24} onPress={() => {showDialog(person.id, person.name) }} disabled={offline}/>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
 
-      <Button mode="contained" icon="plus" onPress={() => showAddPerson()}>
-        Add Person
-      </Button>
+      {/* Add FAB Button */}
+      <FAB
+        icon="plus"
+        onPress={showAddPerson}
+        disabled={offline}
+        style={{ position: "absolute", margin: 16, right: 0, bottom: 0 }}
+      />
 
-      <Button mode="contained" icon="delete" onPress={() => handleDeleteTest()}>
-        Delete Person
-      </Button>
+      {/* Delete Dialog Box */}
+      <Portal>
+        <Dialog visible={visible} onDismiss={hideDialog}>
+          <Dialog.Title>Confirm Deletion</Dialog.Title>
+          <Dialog.Content>
+            <Text>Are you sure you want to delete?</Text>
+            <Text style={{fontWeight: "bold"}}>{selectedPersonName}</Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={hideDialog}>Cancel</Button>
+            <Button onPress={handleDelete}>Delete</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
     </Surface>
   )
 }

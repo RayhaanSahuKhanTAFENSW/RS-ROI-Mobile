@@ -8,16 +8,18 @@ import { addPerson, fetchDepartments, fetchPersonById, updatePerson } from '../u
 
 export default function PersonEditScreen(props) {
 
+  theme = useTheme();
+
   const {id} = props.route.params;
 
   const [person, setPerson] = useState({
-    name: "New Person",
-    phone: "123456",
-    street: "New Street",
-    city: "New City",
-    state: "NSW",
-    zip: "1234",
-    country: "Australia",
+    name: "",
+    phone: "",
+    street: "",
+    city: "",
+    state: "",
+    zip: "",
+    country: "",
     departmentId: 1,
   });
   const [offline, setOffline] = useState(false);
@@ -28,11 +30,14 @@ export default function PersonEditScreen(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const departmentsData = await fetchDepartments();
+        const departmentsData = await fetchDepartments(setOffline);
         setDepartments(departmentsData);
+        setSelectedDepartment(departmentsData[0].id);
+        
         if (id !== -1) {
-          const personData = await fetchPersonById(id);
+          const personData = await fetchPersonById(id, setOffline);
           setPerson(personData);
+          setSelectedDepartment(personData.departmentId);
         }
       } catch (err) {
         console.error(err);
@@ -46,10 +51,12 @@ export default function PersonEditScreen(props) {
 
   async function handleSubmit() {
     try {
+      const updatedPerson = { ...person, departmentId: selectedDepartment};
+
       if (id === -1) {
-        await addPerson(person);
+        await addPerson(updatedPerson);
       } else {
-        await updatePerson(id, person);
+        await updatePerson(id, updatedPerson);
       }
       props.navigation.goBack();
     } catch (err) {
@@ -64,29 +71,119 @@ export default function PersonEditScreen(props) {
   }
   // #endregion
 
-  return (
-    <Surface style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text  variant='displayMedium'>PersonEditScreen</Text>
-      <Text variant='displaySmall'>Person Info</Text>
-      <Text>{person?.name}</Text>
-      <Text>{person?.phone}</Text>
-      <Text>{person?.street}</Text>
-      <Text>{person?.city}</Text>
-      <Text>{person?.state}</Text>
-      <Text>{person?.zip}</Text>
-      <Text>{person?.country}</Text>
-      <Text>{person?.departmentId}</Text>
-      <Text variant='displaySmall'>Departments</Text>
-      {departments.map((department) => (
-        <Text key={department.id}>{department.name}</Text>
-      ))}
-      <Button mode="contained" icon="update" onPress={() => showPeopleView()}>
-        Back
-      </Button>
+  if (!departments || departments.length === 0) {
+    return <Text>No departments available.</Text>; // Or handle accordingly
+  }
 
-      <Button mode="contained" icon="update" onPress={() => handleSubmit()}>
-        Save or New
-      </Button>
+  return (
+    <Surface style={{flex:1, padding: 16}}>
+      <Text
+        variant="headlineLarge"
+        style={{
+          marginHorizontal: 10,
+          marginBottom: 24,
+          fontWeight: "bold",
+          color: theme.colors.primary,
+        }}
+      >
+        {id === -1 ? "New Person" : person.name}
+      </Text>
+
+      <ScrollView style={{ flex: 1 }}>
+        <TextInput
+          label="Name"
+          value={person.name}
+          onChangeText={(text) => setPerson({ ...person, name: text })}
+          mode="outlined"
+          keyboardType="numeric"
+          style={{ marginBottom: 16 }}
+        />
+        <TextInput
+          label="Phone"
+          value={person.phone}
+          onChangeText={(text) => setPerson({ ...person, phone: text })}
+          mode="outlined"
+          keyboardType="numeric"
+          style={{ marginBottom: 16 }}
+        />
+        <TextInput
+          label="Street"
+          value={person.street}
+          onChangeText={(text) => setPerson({ ...person, street: text })}
+          mode="outlined"
+          keyboardType="numeric"
+          style={{ marginBottom: 16 }}
+        />
+        <TextInput
+          label="City"
+          value={person.city}
+          onChangeText={(text) => setPerson({ ...person, city: text })}
+          mode="outlined"
+          keyboardType="numeric"
+          style={{ marginBottom: 16 }}
+        />
+        <TextInput
+          label="State"
+          value={person.state}
+          onChangeText={(text) => setPerson({ ...person, state: text })}
+          mode="outlined"
+          keyboardType="numeric"
+          style={{ marginBottom: 16 }}
+        />
+        <TextInput
+          label="Zip"
+          value={person.zip}
+          onChangeText={(text) => setPerson({ ...person, zip: text })}
+          mode="outlined"
+          keyboardType="numeric"
+          style={{ marginBottom: 16 }}
+        />
+        <TextInput
+          label="Country"
+          value={person.country}
+          onChangeText={(text) => setPerson({ ...person, country: text })}
+          mode="outlined"
+          keyboardType="numeric"
+          style={{ marginBottom: 16 }}
+        />
+        <Dropdown
+          label="Department"
+          mode="outlined"
+          value={selectedDepartment}
+          onSelect={setSelectedDepartment}
+          options={departments.map((department) => ({
+            label: department.name,
+            value: department.id,
+          }))}
+        />
+      </ScrollView>
+
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          padding: 10,
+        }}
+      >
+        <View style={{ flex: 1, marginHorizontal: 10 }}>
+          <Button
+            mode="outlined"
+            icon="keyboard-return"
+            onPress={showPeopleView}
+          >
+            Cancel
+          </Button>
+        </View>
+        <View style={{ flex: 1, marginHorizontal: 10 }}>
+          <Button
+            mode="contained" 
+            icon="update" 
+            onPress={handleSubmit}
+          >
+            Save
+          </Button>
+        </View>
+    </View>
     </Surface>
   )
 } 
