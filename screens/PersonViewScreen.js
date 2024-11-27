@@ -56,6 +56,7 @@ export default function PersonViewScreen(props) {
           marginBottom: 24,
           fontWeight: "bold",
           color: theme.colors.primary,
+          fontFamily: "Trebuchet MS"
         }}
       >
         {person?.name}
@@ -82,6 +83,7 @@ export default function PersonViewScreen(props) {
                 marginBottom: 6,
                 color: "#5D5D5D",
                 fontSize: 16,
+                fontFamily: "Trebuchet MS"
               }}
             >
               {label}
@@ -95,6 +97,7 @@ export default function PersonViewScreen(props) {
                 paddingBottom: 10,
                 borderBottomWidth: 1,
                 borderBottomColor: "#BDC3C7",
+                fontFamily: "Trebuchet MS"
               }}
             >
               {value}
@@ -110,6 +113,7 @@ export default function PersonViewScreen(props) {
           onPress={showPeopleView}
           style={{
             width: "100%",
+            fontFamily: "Trebuchet MS"
           }}
         >
           Go Back

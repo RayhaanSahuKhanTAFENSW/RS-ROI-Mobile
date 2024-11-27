@@ -84,6 +84,7 @@ export default function PersonEditScreen(props) {
           marginBottom: 24,
           fontWeight: "bold",
           color: theme.colors.primary,
+          fontFamily: "Trebuchet MS"
         }}
       >
         {id === -1 ? "New Person" : person.name}
@@ -96,7 +97,7 @@ export default function PersonEditScreen(props) {
           onChangeText={(text) => setPerson({ ...person, name: text })}
           mode="outlined"
           keyboardType="numeric"
-          style={{ marginBottom: 16 }}
+          style={{ marginBottom: 16, fontFamily: "Trebuchet MS" }}
         />
         <TextInput
           label="Phone"
@@ -104,7 +105,7 @@ export default function PersonEditScreen(props) {
           onChangeText={(text) => setPerson({ ...person, phone: text })}
           mode="outlined"
           keyboardType="numeric"
-          style={{ marginBottom: 16 }}
+          style={{ marginBottom: 16, fontFamily: "Trebuchet MS" }}
         />
         <TextInput
           label="Street"
@@ -112,7 +113,7 @@ export default function PersonEditScreen(props) {
           onChangeText={(text) => setPerson({ ...person, street: text })}
           mode="outlined"
           keyboardType="numeric"
-          style={{ marginBottom: 16 }}
+          style={{ marginBottom: 16, fontFamily: "Trebuchet MS" }}
         />
         <TextInput
           label="City"
@@ -120,7 +121,7 @@ export default function PersonEditScreen(props) {
           onChangeText={(text) => setPerson({ ...person, city: text })}
           mode="outlined"
           keyboardType="numeric"
-          style={{ marginBottom: 16 }}
+          style={{ marginBottom: 16, fontFamily: "Trebuchet MS" }}
         />
         <TextInput
           label="State"
@@ -128,7 +129,7 @@ export default function PersonEditScreen(props) {
           onChangeText={(text) => setPerson({ ...person, state: text })}
           mode="outlined"
           keyboardType="numeric"
-          style={{ marginBottom: 16 }}
+          style={{ marginBottom: 16, fontFamily: "Trebuchet MS" }}
         />
         <TextInput
           label="Zip"
@@ -136,7 +137,7 @@ export default function PersonEditScreen(props) {
           onChangeText={(text) => setPerson({ ...person, zip: text })}
           mode="outlined"
           keyboardType="numeric"
-          style={{ marginBottom: 16 }}
+          style={{ marginBottom: 16, fontFamily: "Trebuchet MS" }}
         />
         <TextInput
           label="Country"
@@ -144,7 +145,7 @@ export default function PersonEditScreen(props) {
           onChangeText={(text) => setPerson({ ...person, country: text })}
           mode="outlined"
           keyboardType="numeric"
-          style={{ marginBottom: 16 }}
+          style={{ marginBottom: 16, fontFamily: "Trebuchet MS" }}
         />
         <Dropdown
           label="Department"
@@ -155,6 +156,7 @@ export default function PersonEditScreen(props) {
             label: department.name,
             value: department.id,
           }))}
+          style={{ fontFamily: "Trebuchet MS" }}
         />
       </ScrollView>
 
@@ -170,6 +172,7 @@ export default function PersonEditScreen(props) {
             mode="outlined"
             icon="keyboard-return"
             onPress={showPeopleView}
+            style={{ fontFamily: "Trebuchet MS" }}
           >
             Cancel
           </Button>
@@ -179,6 +182,7 @@ export default function PersonEditScreen(props) {
             mode="contained" 
             icon="update" 
             onPress={handleSubmit}
+            style={{ fontFamily: "Trebuchet MS" }}
           >
             Save
           </Button>

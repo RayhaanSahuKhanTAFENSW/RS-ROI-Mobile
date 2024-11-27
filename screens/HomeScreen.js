@@ -17,6 +17,7 @@ export default function HomeScreen(props) {
           marginBottom: 24,
           fontWeight: "bold",
           color: theme.colors.primary,
+          fontFamily: "Trebuchet MS"
         }}
       >
         Home
@@ -36,14 +37,14 @@ export default function HomeScreen(props) {
                 backgroundColor: theme.colors.elevation.level2,
                 alignItems: "center",
                 borderRadius: 5,
-                padding: 10
+                padding: 10,
               }}
             >
           <View style={{flex: 1}}>
-            <Text variant="titleMedium">Remaining Leave Days</Text>
+            <Text variant="titleLarge" style={{ fontFamily: "Trebuchet MS"}}>Remaining Leave Days</Text>
           </View>
           <View style={{justifyContent: "flex-end"}}>
-            <Text variant="titleMedium" style={{fontWeight: "bold"}}>15</Text>
+            <Text variant="titleLarge" style={{fontWeight: "bold", fontFamily: "Trebuchet MS"}}>15</Text>
           </View>
         </View>
         
@@ -60,10 +61,10 @@ export default function HomeScreen(props) {
               }}
             >
           <View style={{flex: 1}}>
-            <Text variant="titleMedium">Upcoming Holidays</Text>
+            <Text variant="titleLarge" style={{ fontFamily: "Trebuchet MS"}}>Upcoming Holidays</Text>
           </View>
           <View style={{justifyContent: "flex-end"}}>
-            <Text variant="titleMedium" style={{fontWeight: "bold"}}>15</Text>
+            <Text variant="titleLarge" style={{fontWeight: "bold", fontFamily: "Trebuchet MS"}}>15</Text>
           </View>
         </View>
       </ScrollView>

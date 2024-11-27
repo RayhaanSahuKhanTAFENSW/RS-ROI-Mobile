@@ -94,7 +94,7 @@ export default function PeopleViewScreen(props) {
             borderRadius: 5,
           }}
         >
-          <Text variant="bodyLarge" style={{ color: theme.colors.onError, paddingVertical:12 }}>
+          <Text variant="bodyLarge" style={{ color: theme.colors.onError, paddingVertical:12, fontFamily: "Trebuchet MS" }}>
             Offline Mode
           </Text>
         </View>
@@ -107,6 +107,7 @@ export default function PeopleViewScreen(props) {
           marginBottom: 24,
           fontWeight: "bold",
           color: theme.colors.primary,
+          fontFamily: "Trebuchet MS"
         }}
       >
         Staff Directory
@@ -134,9 +135,9 @@ export default function PeopleViewScreen(props) {
             </View>
             <View style={{ flex: 1, marginLeft: 10, padding: 10 }}>
               { /* Main Content */}
-              <Text variant="titleMedium">{person.name}</Text>
-              <Text variant="titleMedium">{person.Department.name}</Text>
-              <Text variant="titleMedium">{person.phone}</Text>
+              <Text variant="titleMedium" style={{ fontFamily: "Trebuchet MS"}}>{person.name}</Text>
+              <Text variant="titleMedium" style={{ fontFamily: "Trebuchet MS"}}>{person.Department.name}</Text>
+              <Text variant="titleMedium" style={{ fontFamily: "Trebuchet MS"}}>{person.phone}</Text>
             </View>
             <View>
               { /* Action Buttons */}
@@ -184,14 +185,14 @@ export default function PeopleViewScreen(props) {
       {/* Delete Dialog Box */}
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>
-          <Dialog.Title>Confirm Deletion</Dialog.Title>
+          <Dialog.Title style={{ fontFamily: "Trebuchet MS"}}>Confirm Deletion</Dialog.Title>
           <Dialog.Content>
-            <Text>Are you sure you want to delete?</Text>
-            <Text style={{fontWeight: "bold"}}>{selectedPersonName}</Text>
+            <Text style={{ fontFamily: "Trebuchet MS"}}>Are you sure you want to delete?</Text>
+            <Text style={{fontWeight: "bold", fontFamily: "Trebuchet MS"}}>{selectedPersonName}</Text>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={hideDialog}>Cancel</Button>
-            <Button onPress={handleDelete}>Delete</Button>
+            <Button style={{ fontFamily: "Trebuchet MS"}} onPress={hideDialog}>Cancel</Button>
+            <Button style={{ fontFamily: "Trebuchet MS"}} onPress={handleDelete}>Delete</Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>
