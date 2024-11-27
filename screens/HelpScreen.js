@@ -7,8 +7,41 @@ import { Dropdown } from "react-native-paper-dropdown";
 
 export default function HelpScreen(props) {
   return (
-    <Surface style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text  variant='displaySmall'>HelpScreen</Text>
+    <Surface style={{flex:1, padding: 16}} mode="flat" elevation={1}>
+      <Text
+        variant="headlineLarge"
+        style={{
+          marginHorizontal: 10,
+          marginBottom: 24,
+          fontWeight: "bold",
+          color: theme.colors.primary,
+        }}
+      >
+        Help
+      </Text>
+
+      <ScrollView style={{flex: 1}}>
+        <View style={{marginBottom: 20}}>
+          <Text variant="titleLarge" style={{color: theme.colors.primary,}}>Staff Directory:</Text>
+          <Text variant='titleMedium'>The staff directory can be easily accessed by pressing the staff directory button found at middle bottom of the screen. Once clicked it will bring up a scrollable list of all the staff members in the directory.</Text>
+        </View>
+        <View style={{marginBottom: 20}}>
+          <Text variant="titleLarge" style={{color: theme.colors.primary,}}>View Staff Member:</Text>
+          <Text variant='titleMedium'>To view a staff member’s details, first open the staff directory, then press the folder button on the staff member you wish to view. This will bring up all the details for this staff member.</Text>
+        </View>
+        <View style={{marginBottom: 20}}>
+          <Text variant="titleLarge" style={{color: theme.colors.primary,}}>Edit Staff Member:</Text>
+          <Text variant='titleMedium'>To edit a staff member’s details, first open the staff directory, then press the pen icon on the top right side of the staff member you wish to edit. This will bring up the staff member’s details in text boxes that you can edit. Once you have made the desired changes, press the save button at the bottom of the screen.</Text>
+        </View>
+        <View style={{marginBottom: 20}}>
+          <Text variant="titleLarge" style={{color: theme.colors.primary,}}>Add Staff Member:</Text>
+          <Text variant='titleMedium'>To add a staff member, first open the staff directory, then press the plus icon button at the bottom right of the screen. This will open up a blank screen with empty staff details. Once you have filled them in, press the save button at the bottom of the screen.</Text>
+        </View>
+        <View>
+          <Text variant="titleLarge" style={{color: theme.colors.primary,}}>Delete Staff Member:</Text>
+          <Text variant='titleMedium'>To delete a staff member, first open the staff directory, then press the bin icon button on the bottom right side of the staff member you wish to delete. This will open a popup confirming that you want to delete. Confirm the popup and the staff member will now be deleted.</Text>
+        </View>
+      </ScrollView>
     </Surface>
   )
 }

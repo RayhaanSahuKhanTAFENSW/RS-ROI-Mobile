@@ -29,7 +29,7 @@ export default function MainNavigator() {
         name='People'
         component={PeopleNavigator}
         options={{
-          tabBarLabel: 'People',
+          tabBarLabel: 'Staff Directory',
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name='people' color={color} size={26} />
           ),
