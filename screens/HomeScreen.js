@@ -67,6 +67,10 @@ export default function HomeScreen(props) {
             <Text variant="titleLarge" style={{fontWeight: "bold", fontFamily: "Trebuchet MS"}}>15</Text>
           </View>
         </View>
+
+        <Text style={{marginTop: 20}}>
+          Developed By Rayhaan Sahu-Khan
+        </Text>
       </ScrollView>
     </Surface>
   )
